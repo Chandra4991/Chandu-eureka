@@ -4,4 +4,7 @@
 //helmPipeline(
 //    appName: 'eureka'
 //)
+k8sPipeline(
+    appName: 'eureka'
+)
 
