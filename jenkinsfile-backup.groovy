@@ -69,13 +69,6 @@ pipeline {
                 expression {
                     params.scanOnly == 'yes'
                 }
-                // anyOf {
-                //     expression {
-                //         params.scanOnly == 'yes'
-                //         params.buildOnly == 'yes'
-                //         params.dockerPush == 'yes'
-                //     }
-                // }
             }
             steps {
                 echo "Starting Sonar Scans"
@@ -115,7 +108,6 @@ pipeline {
             }
             steps {
                 script {
-                    //envDeploy, hostPort, contPort)
                     imageValidation().call()
                     dockerDeploy('dev', '5761', '8761').call()
                 }
@@ -129,7 +121,6 @@ pipeline {
             }
             steps {
                 script {
-                    //envDeploy, hostPort, contPort)
                     imageValidation().call()
                     dockerDeploy('tst', '6761', '8761').call()
                 }
@@ -151,7 +142,6 @@ pipeline {
             }
             steps {
                 script {
-                    //envDeploy, hostPort, contPort)
                     imageValidation().call()
                     dockerDeploy('stg', '7761', '8761').call()
                 }
@@ -176,7 +166,6 @@ pipeline {
                     input message: "Deploying to ${env.APPLICATION_NAME} to production ??", ok: 'yes', submitter: 'hemasre'
                 }
                 script {
-                    //envDeploy, hostPort, contPort)
                     dockerDeploy('prd', '8761', '8761').call()
                 }
             }
@@ -204,7 +193,7 @@ def dockerBuildAndPush(){
         sh "docker push ${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${GIT_COMMIT}"
     }
 }
-
+// Method for Image validation
 def imageValidation() {
     return {
         println("Attemting to Pull the Docker Image")
